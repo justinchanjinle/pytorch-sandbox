@@ -1,2 +1,5 @@
+import torch
+
 if __name__ == "__main__":
-    pass
+    x = torch.rand(5, 3)
+    print(x)
