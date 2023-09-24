@@ -1,0 +1,48 @@
+name: lint-and-unit-test
+on:
+  push:
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.10.12 ]
+    steps:
+      - uses: actions/checkout@v3.0.2
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+      - name: Install dev dependencies
+        run: |
+          make install-dev-deps
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'poetry'
+      - name: Install Python dev packages
+        run: |
+          make install-dev
+      - name: Run lint check
+        run: make check-lint
+  unit-test:
+    needs:
+      - lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.10.12 ]
+    steps:
+      - uses: actions/checkout@v3.0.2
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'poetry'
+      - name: Install all Python packages
+        run: |
+          make install
+      - name: Run unit tests
+        run: |
+          make test
