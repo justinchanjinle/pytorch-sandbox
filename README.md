@@ -1,2 +1,2 @@
-# python-project-template
-Project template for Python apps.
+# pytorch-sandbox
+Sandbox repo for pytorch sandbox

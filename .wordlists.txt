@@ -25,3 +25,5 @@ wordlist
 wordlists
 py
 virtualenv
+pytorch
+repo
