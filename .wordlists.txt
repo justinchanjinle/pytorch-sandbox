@@ -49,3 +49,5 @@ stackoverflow
 ubuntu
 valueerror
 wsl
+torchaudio
+torchvision
