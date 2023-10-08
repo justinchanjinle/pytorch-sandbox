@@ -51,3 +51,7 @@ valueerror
 wsl
 torchaudio
 torchvision
+cpu
+gpu
+mps
+datasets
