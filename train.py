@@ -5,6 +5,7 @@ from torchvision import datasets
 from torchvision.transforms import ToTensor
 
 from neural_net import NeuralNetwork
+from utils import get_device
 
 
 def train(dataloader, model, loss_fn, optimizer, device):
@@ -68,11 +69,7 @@ def main():
     train_dataloader = DataLoader(training_data, batch_size=batch_size)
     test_dataloader = DataLoader(test_data, batch_size=batch_size)
 
-    device = (
-        "cuda"
-        if torch.cuda.is_available()
-        else "mps" if torch.backends.mps.is_available() else "cpu"
-    )
+    device = get_device()
     print(f"Using {device} device")
 
     # Create model instance and move it to the device.
@@ -90,6 +87,11 @@ def main():
         train(train_dataloader, model, loss_fn, optimizer, device)
         evaluate(test_dataloader, model, loss_fn, device)
     print("Done!")
+
+    # Save the model.
+    save_model_path = "models/model.pth"
+    torch.save(model.state_dict(), save_model_path)
+    print(f"Saved PyTorch Model State to {save_model_path}")
 
 
 if __name__ == "__main__":
